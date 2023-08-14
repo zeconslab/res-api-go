@@ -6,7 +6,6 @@ import (
 
 	"github.com/gorilla/mux"
 	"github.com/zeconslab/res-api-go/db"
-	"github.com/zeconslab/res-api-go/models"
 	"github.com/zeconslab/res-api-go/routers"
 )
 
@@ -14,10 +13,6 @@ func main() {
 
 	//Ejecutar conexion con la base de datos
 	db.DBconection()
-
-	//Migracion de la base de datos
-	db.DB.AutoMigrate(models.Task{})
-	db.DB.AutoMigrate(models.User{})
 
 	//Creacion de router
 	route := mux.NewRouter()
@@ -33,7 +28,6 @@ func main() {
 	//Inicializar servidor de escucha
 	port := "4000"
 	hostname := "localhost"
-	log.Println(port)
 	log.Print("Server listen port ", port, ". Go to http://", hostname, ":", port, "/")
 	http.ListenAndServe(":"+port, route)
 

@@ -21,6 +21,8 @@ func DBconection() {
 	if error != nil {
 		log.Fatal(error)
 	} else {
+		//Migracion de la base de datos
+		Migrates()
 		log.Println("DB Connected!")
 	}
 }

@@ -78,7 +78,7 @@ func DeleteUserHandler(w http.ResponseWriter, r *http.Request) {
 }
 
 /*
-Funcion para actualizar un usuario
+Metodo para ctualizar usuario
 */
 func PutUserHandler(w http.ResponseWriter, r *http.Request) {
 	var user models.User
@@ -95,6 +95,7 @@ func PutUserHandler(w http.ResponseWriter, r *http.Request) {
 	//Actualizar el usuario
 	db.DB.Model(&user).Updates(models.User{FirstName: user.FirstName, LastName: user.LastName, Email: user.Email})
 
+	//Retornar el usuario actualizado
 	json.NewEncoder(w).Encode(&user)
 
 }
