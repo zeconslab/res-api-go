@@ -1,7 +1,10 @@
 package routers
 
-import "net/http"
+import (
+	"encoding/json"
+	"net/http"
+)
 
 func HomeHandler(w http.ResponseWriter, r *http.Request) {
-	w.Write([]byte("Hola mundo!"))
+	json.NewEncoder(w).Encode("Welcome to my API")
 }

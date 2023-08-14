@@ -15,14 +15,15 @@ Metodo para verificacion conexion de la base de datos
 y retorna una respuesta de conexion exitosa o un error
 */
 func DBconection() {
+	log.Println("Connecting to DB...")
 	var error error
 	DB, error = gorm.Open(postgres.Open(DBS), &gorm.Config{})
 
 	if error != nil {
 		log.Fatal(error)
 	} else {
+		log.Println("Connecting to DB... OK")
 		//Migracion de la base de datos
 		Migrates()
-		log.Println("DB Connected!")
 	}
 }

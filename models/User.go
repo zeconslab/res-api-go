@@ -5,8 +5,8 @@ import "gorm.io/gorm"
 type User struct {
 	gorm.Model
 
-	FirstName string `gorm:"not null"`
-	LastName  string `gorm:"not null"`
-	Email     string `gorm:"not null;unique_index"`
-	Task      []Task
+	FirstName string `gorm:"not null" json:"firstName"`
+	LastName  string `gorm:"not null" json:"lastName"`
+	Email     string `gorm:"type:varchar(100);unique_index" json:"email"`
+	Tasks     []Task `json:"tasks"`
 }

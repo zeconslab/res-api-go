@@ -15,6 +15,11 @@ Funcion para obtener usuarios de la base de datos
 func GetUsersHandler(w http.ResponseWriter, r *http.Request) {
 	var users []models.User
 	db.DB.Find(&users)
+	if len(users) == 0 {
+		w.WriteHeader(http.StatusNotFound)
+		w.Write([]byte("Users not found!"))
+		return
+	}
 
 	json.NewEncoder(w).Encode(&users)
 }
@@ -37,6 +42,9 @@ func GetUserHandler(w http.ResponseWriter, r *http.Request) {
 		w.Write([]byte("User not found!"))
 		return
 	}
+
+	//Cargar las tareas del usuario
+	db.DB.Model(&user).Association("Tasks").Find(&user.Tasks)
 
 	json.NewEncoder(w).Encode(&user)
 }
@@ -80,22 +88,11 @@ func DeleteUserHandler(w http.ResponseWriter, r *http.Request) {
 /*
 Metodo para ctualizar usuario
 */
-func PutUserHandler(w http.ResponseWriter, r *http.Request) {
+func UpdateUserHandler(w http.ResponseWriter, r *http.Request) {
 	var user models.User
-	params := mux.Vars(r)
-	db.DB.First(&user, params["id"])
+	db.DB.First(&user, r.URL.Query().Get("id"))
 	json.NewDecoder(r.Body).Decode(&user)
-
-	if user.ID == 0 {
-		w.WriteHeader(http.StatusNotFound)
-		w.Write([]byte("User not found!"))
-		return
-	}
-
-	//Actualizar el usuario
-	db.DB.Model(&user).Updates(models.User{FirstName: user.FirstName, LastName: user.LastName, Email: user.Email})
-
-	//Retornar el usuario actualizado
+	db.DB.Save(&user)
 	json.NewEncoder(w).Encode(&user)
 
 }
