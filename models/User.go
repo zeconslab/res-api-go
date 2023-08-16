@@ -9,4 +9,5 @@ type User struct {
 	LastName  string `gorm:"not null" json:"lastName"`
 	Email     string `gorm:"type:varchar(100);unique_index" json:"email"`
 	Tasks     []Task `json:"tasks"`
+	Password  string `gorm:"not null" json:"password"`
 }

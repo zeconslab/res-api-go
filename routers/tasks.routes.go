@@ -34,7 +34,7 @@ func GetTaskHandler(w http.ResponseWriter, r *http.Request) {
 	json.NewEncoder(w).Encode(&task)
 }
 
-func UpdateTaskHandler(w http.ResponseWriter, r *http.Request) {
+func UpdateDTaskHandler(w http.ResponseWriter, r *http.Request) {
 	var task models.Task
 	db.DB.First(&task, r.URL.Query().Get("id"))
 	json.NewDecoder(r.Body).Decode(&task)
